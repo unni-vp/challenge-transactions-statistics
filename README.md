@@ -18,11 +18,20 @@ mvn spring-boot:run
 ## Usage
 
 ### Get statistics
-Request:
+This endpoint returns the statistics based on the transactions that happened in the last 60 seconds.
+
+The response body contains:
+ - sum : a BigDecimal specifying the total sum of transaction value in the last 60 seconds
+ - avg : a BigDecimal specifying the average amount of transaction value in the last 60 seconds
+ - max : a BigDecimal specifying single highest transaction value in the last 60 seconds
+ - min : a BigDecimal specifying single lowest transaction value in the last 60 seconds
+ - count : a long specifying the total number of transactions that happened in the last 60 seconds
+
+**Request**:
 ```bash
 HTTP/1.1 GET /statistics
 ```
-Response:
+**Response**:
 ```bash
 HTTP/1.1 200 OK
 
@@ -34,8 +43,15 @@ HTTP/1.1 200 OK
     "count": 2
 }
 ```
+
 ### Post Transaction
-Request:
+This endpoint is called to create a new transaction.
+
+Following details need to be specified in the request body:
+ - amount : transaction amount; a string of arbitrary length that is parsable as a BigDecimal
+ - timestamp : transaction time in the ISO 8601 format
+
+**Request**:
 ```bash
 HTTP/1.1 POST /transactions
 Accept: application/json
@@ -46,16 +62,19 @@ Content-Type: application/json
     "timestamp": "2021-06-14T17:56:03.312Z"
 }
 ```
-Response:
+**Response**:
 ```bash
-HTTP/1.1 200 OK
+HTTP/1.1 201 CREATED
 ```
+
 ### Clear Transaction
-Request:
+This endpoint causes all existing transactions to be deleted
+
+**Request**:
 ```bash
 HTTP/1.1 DELETE /transactions
 ```
-Response:
+**Response**:
 ```bash
 HTTP/1.1 204 NO_CONTENT
 ```
