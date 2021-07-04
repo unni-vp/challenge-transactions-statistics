@@ -1,6 +1,7 @@
 # challenge-transactions-statistics
+Spring-Boot Microservice that provides APIs to submit transactions and retrieve statistics based on the stored transactions.
 
-Spring-boot Microservice that provides API to:
+The following APIs are provided:
  - Display statistics of transactions that occured in last 60 seconds.
  - Save transaction (amount, timestamp)
  - Clear all previous transactions
