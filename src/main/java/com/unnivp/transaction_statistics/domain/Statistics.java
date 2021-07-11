@@ -5,6 +5,9 @@ import java.math.RoundingMode;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * Class to hold statistic values based of the transactions of the last 60
  * seconds
@@ -16,22 +19,22 @@ public class Statistics {
 
 	/** total sum of transaction values in the last 60 seconds **/
 	@JsonFormat(shape = JsonFormat.Shape.STRING)
-	private BigDecimal sum;
+	private @Getter @Setter BigDecimal sum;
 
 	/** average amount of transaction values in the last 60 seconds **/
 	@JsonFormat(shape = JsonFormat.Shape.STRING)
-	private BigDecimal avg;
+	private @Getter @Setter BigDecimal avg;
 
 	/** single highest transaction value in the last 60 seconds **/
 	@JsonFormat(shape = JsonFormat.Shape.STRING)
-	private BigDecimal max;
+	private @Getter BigDecimal max;
 
 	/** single lowest transaction value in the last 60 seconds **/
 	@JsonFormat(shape = JsonFormat.Shape.STRING)
-	private BigDecimal min;
+	private @Getter BigDecimal min;
 
 	/** total number of transactions that happened in the last 60 seconds **/
-	private long count;
+	private @Getter @Setter long count;
 	
 	
 	/**
@@ -68,48 +71,16 @@ public class Statistics {
 		this.sum = this.sum.add(value);
 	}
 
-	public BigDecimal getSum() {
-		return sum;
-	}
-
-	public void setSum(BigDecimal sum) {
-		this.sum = sum;
-	}
-
-	public BigDecimal getAvg() {
-		return avg;
-	}
-
-	public void setAvg(BigDecimal avg) {
-		this.avg = avg;
-	}
-
-	public BigDecimal getMin() {
-		return min;
-	}
-
 	public void setMin(BigDecimal value) {
 		//Compares input value and assign to min, if it less than min or min is null 
 		this.min = (this.min.compareTo(BigDecimal.ZERO) == 0 || value.compareTo(this.min) < 0) ? value.setScale(2, RoundingMode.HALF_UP) : this.min;
 	}
 	
-	public BigDecimal getMax() {
-		return max;
-	}
-
 	public void setMax(BigDecimal value) {
 		//Compares input value and assign to max, if it greater than max 
 		this.max = value.compareTo(this.max) > 0 ? value.setScale(2, RoundingMode.HALF_UP) : this.max;
 	}
 
-	public long getCount() {
-		return count;
-	}
-
-	public void setCount(long count) {
-		this.count = count;
-	}
-	
 	public void addCount(int count) {
 		this.count+= count;
 	}
